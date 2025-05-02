@@ -24,6 +24,21 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class HomeComponent {
   private breakpointObserver = inject(BreakpointObserver);
+  menuItems: Array<{path:string, etichetta:string}> = [
+    {
+      path:'/',
+      etichetta:'Home'
+    },
+    {
+      path:'/categories',
+      etichetta:'Categorie'
+    },
+    
+    {
+      path:'/suppliers',
+      etichetta:'Fornitori'
+    },
+  ]
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
