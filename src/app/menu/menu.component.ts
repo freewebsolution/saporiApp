@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
+import { MenuItem } from './MenuItem';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +13,7 @@ import { MatListModule } from '@angular/material/list';
   styles: ``
 })
 export class MenuComponent {
-   menuItems: Array<{path:string, etichetta:string}> = [
+   menuItems: Array<MenuItem> = [
     {
       path:'/',
       etichetta:'Home'
