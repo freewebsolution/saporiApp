@@ -7,4 +7,8 @@ import { Injectable } from '@angular/core';
 export class CategoryService {
 
   constructor(private http: HttpClient) { }
+
+  public getAll() {
+    return this.http.get("http://localhost:3700/categories")
+  }
 }
