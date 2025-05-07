@@ -36,7 +36,7 @@ export class CategoriesComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Category>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['id', 'name','description'];
 
   ngAfterViewInit(): void {
 /*     this.dataSource.sort = this.sort;
