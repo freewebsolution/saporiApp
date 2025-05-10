@@ -12,6 +12,7 @@ import { CategoryFormComponent } from './form/form.component';
 
 @Component({
   selector: 'app-categories',
+  standalone: true,
   templateUrl: './categories.component.html',
   styles: `
     .full-width-table {
@@ -29,6 +30,8 @@ import { CategoryFormComponent } from './form/form.component';
     ]
 })
 export class CategoriesComponent implements AfterViewInit {
+
+  showForm: Boolean = false;
 
   constructor (private categoryService: CategoryService) {}
 
@@ -53,5 +56,9 @@ export class CategoriesComponent implements AfterViewInit {
     this.table.dataSource = this.dataSource;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  onNewCategoryClick() {
+    this.showForm = true;
   }
 }
