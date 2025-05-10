@@ -23,4 +23,7 @@ export class CategoryFormComponent {
     name: ["", [Validators.required, Validators.minLength(3)]],
     description: ["", Validators.required],
   })
+  onSubmit() {
+    console.log('Submit', this.categoryForm.value)
+  }
 }
