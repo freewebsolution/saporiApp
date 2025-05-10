@@ -4,9 +4,17 @@
     <div class="container">
       <mat-form-field class="item-30">
         <input matInput placeholder="Nome" formControlName="name" />
+        @if (categoryForm.controls['name'].hasError('required')) {
+        <mat-error>Il nome è <strong>obbligatorio</strong></mat-error>
+        } @if (categoryForm.controls['name'].hasError('minlength')) {
+        <mat-error>Il nome è troppo corto</mat-error>
+        }
       </mat-form-field>
       <mat-form-field class="item-70">
-        <input matInput placeholder="Descrizione" formControlName="description" />
+        <input matInput placeholder="Description" formControlName="description" />
+        @if (categoryForm.controls['description'].hasError('required')) {
+        <mat-error>La descrizione è <strong>obbligatoria</strong></mat-error>
+        }
       </mat-form-field>
     </div>
   </form>
