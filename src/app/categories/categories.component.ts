@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CategoryService } from './category.service';
 import { lastValueFrom } from 'rxjs';
 import { Category } from './category.dto';
+import { CategoryFormComponent } from './form/form.component';
 
 @Component({
   selector: 'app-categories',
@@ -23,7 +24,8 @@ import { Category } from './category.dto';
       MatPaginatorModule,
       MatSortModule,
       MatCardModule,
-      MatButtonModule
+      MatButtonModule,
+      CategoryFormComponent
     ]
 })
 export class CategoriesComponent implements AfterViewInit {
