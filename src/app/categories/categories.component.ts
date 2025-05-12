@@ -61,4 +61,8 @@ export class CategoriesComponent implements AfterViewInit {
   onNewCategoryClick() {
     this.showForm = true;
   }
+
+  hideCategoryForm() {
+    this.showForm = false;
+  }
 }
