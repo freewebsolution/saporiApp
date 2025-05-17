@@ -20,6 +20,7 @@ import { MatCardModule } from "@angular/material/card";
 export class CategoryFormComponent {
   
   @Output() back = new EventEmitter
+  @Output() save = new EventEmitter();
 
   private fb = inject(FormBuilder);
   categoryForm = this.fb.group({
@@ -29,7 +30,8 @@ export class CategoryFormComponent {
   })
 
   onSubmit() {
-    console.log('Submit', this.categoryForm.value)
+    console.log('Submit', this.categoryForm.value);
+    this.save.emit(this.categoryForm.value);
   }
   onBack() {
     this.back.emit();

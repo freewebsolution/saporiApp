@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatTableModule, MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
@@ -21,19 +21,20 @@ import { CategoryFormComponent } from './form/form.component';
     
   `,
   imports: [
-      MatTableModule,
-      MatPaginatorModule,
-      MatSortModule,
-      MatCardModule,
-      MatButtonModule,
-      CategoryFormComponent
-    ]
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCardModule,
+    MatButtonModule,
+    CategoryFormComponent
+  ]
 })
 export class CategoriesComponent implements AfterViewInit {
+  @Output() save = new EventEmitter
 
   showForm: Boolean = false;
 
-  constructor (private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService) { }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,16 +42,13 @@ export class CategoriesComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Category>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name','description'];
+  displayedColumns = ['id', 'name', 'description'];
 
   ngAfterViewInit(): void {
-/*     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource; */
     this.loadCategories();
   }
 
-  async loadCategories():Promise<void>{
+  async loadCategories(): Promise<void> {
     const categories = await lastValueFrom(this.categoryService.getAll());
     this.dataSource = new MatTableDataSource(categories);
     this.table.dataSource = this.dataSource;
@@ -65,4 +63,9 @@ export class CategoriesComponent implements AfterViewInit {
   hideCategoryForm() {
     this.showForm = false;
   }
+
+  onSave(category: Category) {
+    console.log("Salva Categoria nel CategoriesComponent", category);
+  }
+
 }
