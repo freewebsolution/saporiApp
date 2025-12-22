@@ -1,5 +1,15 @@
-import { AfterViewInit, Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { MatTableModule, MatTable, MatTableDataSource } from '@angular/material/table';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  MatTableModule,
+  MatTable,
+  MatTableDataSource,
+} from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { CategoriesDataSource, CategoriesItem } from './categories-datasource';
@@ -26,15 +36,15 @@ import { CategoryFormComponent } from './form/form.component';
     MatSortModule,
     MatCardModule,
     MatButtonModule,
-    CategoryFormComponent
-  ]
+    CategoryFormComponent,
+  ],
 })
 export class CategoriesComponent implements AfterViewInit {
   @Output() save = new EventEmitter<Category>();
 
   showForm: Boolean = false;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) {}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -65,8 +75,9 @@ export class CategoriesComponent implements AfterViewInit {
     this.loadCategories();
   }
 
-  onSave(category: Category) {
-    console.log("Salva Categoria nel CategoriesComponent", category);
+  async onSave(category: Category) {
+    const saved = lastValueFrom(this.categoryService.save(category));
+    console.log('Saved', saved);
+    this.hideCategoryForm();
   }
-
 }
