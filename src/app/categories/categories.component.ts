@@ -30,7 +30,7 @@ import { CategoryFormComponent } from './form/form.component';
   ]
 })
 export class CategoriesComponent implements AfterViewInit {
-  @Output() save = new EventEmitter
+  @Output() save = new EventEmitter<Category>();
 
   showForm: Boolean = false;
 
@@ -62,6 +62,7 @@ export class CategoriesComponent implements AfterViewInit {
 
   hideCategoryForm() {
     this.showForm = false;
+    this.loadCategories();
   }
 
   onSave(category: Category) {
