@@ -44,6 +44,8 @@ export class CategoriesComponent implements AfterViewInit {
 
   showForm: Boolean = false;
 
+  category!: Category;
+
   constructor(private categoryService: CategoryService) {}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,7 +54,7 @@ export class CategoriesComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Category>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'description'];
+  displayedColumns = ['id', 'name', 'description', 'actions'];
 
   ngAfterViewInit(): void {
     this.loadCategories();
@@ -67,6 +69,11 @@ export class CategoriesComponent implements AfterViewInit {
   }
 
   onNewCategoryClick() {
+    this.category = {
+      id: 0,
+      name: '',
+      description: '',
+    };
     this.showForm = true;
   }
 
@@ -79,5 +86,9 @@ export class CategoriesComponent implements AfterViewInit {
     const saved = lastValueFrom(this.categoryService.save(category));
     console.log('Saved', saved);
     this.hideCategoryForm();
+  }
+
+  onEditCategoryClick(category: Category) {
+    console.log('edit category', category);
   }
 }

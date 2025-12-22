@@ -1,13 +1,12 @@
-import { Component, EventEmitter, inject, Output } from "@angular/core";
-import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatInputModule } from "@angular/material/input";
-import { MatCardModule } from "@angular/material/card";
-import { Category } from "../category.dto";
-
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { Category } from '../category.dto';
 
 @Component({
-  selector: "category-form",
+  selector: 'category-form',
   standalone: true,
   imports: [
     MatButtonModule,
@@ -15,23 +14,27 @@ import { Category } from "../category.dto";
     ReactiveFormsModule,
     MatCardModule,
   ],
-  templateUrl: "./form.component.html",
+  templateUrl: './form.component.html',
   styles: ``,
 })
 export class CategoryFormComponent {
-  
-  @Output() back = new EventEmitter
+  @Output() back = new EventEmitter();
   @Output() save = new EventEmitter<Category>();
 
   private fb = inject(FormBuilder);
   categoryForm = this.fb.group({
     id: [null],
-    name: ["", [Validators.required, Validators.minLength(3)]],
-    description: ["", Validators.required],
-  })
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    description: ['', Validators.required],
+  });
+
+  @Input()
+  set category(category: Category) {
+    this.categoryForm.setValue(category);
+  }
 
   onSubmit() {
-    console.log("Button save clicked in the CategoryFormComponent");
+    console.log('Button save clicked in the CategoryFormComponent');
     this.save.emit(this.categoryForm.value as Category);
   }
   onBack() {
