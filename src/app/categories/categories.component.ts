@@ -19,6 +19,8 @@ import { CategoryService } from './category.service';
 import { lastValueFrom } from 'rxjs';
 import { Category } from './category.dto';
 import { CategoryFormComponent } from './form/form.component';
+import { MatIconModule } from '@angular/material/icon';
+import { LoadingBarComponent } from '../loading-bar.component';
 
 @Component({
   selector: 'app-categories',
@@ -37,14 +39,18 @@ import { CategoryFormComponent } from './form/form.component';
     MatCardModule,
     MatButtonModule,
     CategoryFormComponent,
+    MatIconModule,
+    LoadingBarComponent,
   ],
 })
 export class CategoriesComponent implements AfterViewInit {
   @Output() save = new EventEmitter<Category>();
 
-  showForm: Boolean = false;
+  showForm: boolean = false;
 
   category!: Category;
+
+  showLoading: boolean = false;
 
   constructor(private categoryService: CategoryService) {}
 
@@ -60,12 +66,19 @@ export class CategoriesComponent implements AfterViewInit {
     this.loadCategories();
   }
 
+  loading = false;
+
   async loadCategories(): Promise<void> {
-    const categories = await lastValueFrom(this.categoryService.getAll());
-    this.dataSource = new MatTableDataSource(categories);
-    this.table.dataSource = this.dataSource;
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.loading = true;
+    try {
+      const categories = await lastValueFrom(this.categoryService.getAll());
+      this.dataSource = new MatTableDataSource(categories);
+      this.table.dataSource = this.dataSource;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    } finally {
+      this.loading = false;
+    }
   }
 
   onNewCategoryClick() {
@@ -90,5 +103,13 @@ export class CategoriesComponent implements AfterViewInit {
 
   onEditCategoryClick(category: Category) {
     console.log('edit category', category);
+  }
+  async onDeleteCategoryClick(category: Category) {
+    if (confirm(`Eliminare "${category.name}" con id ${category.id} ?`)) {
+      this.showLoading = true;
+      await lastValueFrom(this.categoryService.delete(category.id));
+      this.loadCategories();
+      this.showLoading = false;
+    }
   }
 }
